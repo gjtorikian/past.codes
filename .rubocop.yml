@@ -1,0 +1,5 @@
+inherit_gem:
+  rubocop-standard:
+    - config/default.yml
+    - config/minitest.yml
+    - config/rails.yml

@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - production
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    # Service containers to run
+    services:
+      postgres:
+        # Docker Hub image name
+        image: postgres:11
+        # The postgres container requires the postgres user to be setup with a password in order to start it due to security
+        # reasons. It also can't read from the env var above for some reason
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+          --health-retries 5
+        # Maps tcp port 5432 on service container to the host
+        ports: ["5432:5432"]
+      redis:
+        # Docker Hub image name
+        image: redis:3.2-alpine
+        ports: ["6379:6379"]
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 10s --health-timeout
+          5s --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # reads from .ruby-version
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v2
+        with:
+          key: npm-${{ hashFiles('./package-lock.json') }}
+          path: ~/.npm
+          restore-keys: |
+            npm-
+
+      - name: Install npm dependencies
+        run: npm ci --ignore-scripts --no-audit --no-progress --prefer-offline
+
+      - name: Set up the Rails application
+        env:
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        run: |
+          sudo apt-get -yqq install libpq-dev
+          bundle exec rails db:create db:schema:load --trace
+          bundle exec rails db:migrate --trace
+
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          REDIS_URL: redis://localhost:6379/0
+        run: bundle exec rake test

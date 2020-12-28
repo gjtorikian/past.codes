@@ -1,0 +1,28 @@
+<h1>Settings</h1>
+<hr>
+
+<p>
+We're sending emails to <strong><%= current_user.email %></strong>.
+</p>
+
+<p>
+Not what you expect? Change your primary email on GitHub, then sign out and log in again.
+</p>
+
+<h4>How often would you like to receive emails?</h4>
+
+<%= form_with model: current_user, class: "pa2" do |f| %>
+  <div class="flex items-center mb2">
+    <%= radio_button_tag :delivery_type, 'weekly', current_user.frequency == 'weekly', class: "mr2" %>
+    <%= f.label :delivery_type_weekly, "Weekly", class: "lh-copy" %>
+  </div>
+  <div class="flex items-center mb2">
+    <%= radio_button_tag :delivery_type, 'monthly', current_user.frequency == 'monthly', class: "mr2" %>
+    <%= f.label :delivery_type_monthly, "Monthly", class: "lh-copy" %>
+  </div>
+  <%= f.submit "Save", class: "pointer f6 br-pill bg-dark-green no-underline washed-green ba b--dark-green dim mt3 pv2 ph3 dib mr3" %>
+<% end %>
+
+<p class="f5 lh-copy measure">
+  Your next email is scheduled for <strong><%= next_date(current_user.frequency) %></strong>.
+</p>
