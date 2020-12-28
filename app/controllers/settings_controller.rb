@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class SettingsController < ApplicationController
-  include ClientHelper
+  include SessionsHelper
   include TimeHelper
+
+  before_action :require_login
 
   def index; end
 end

@@ -13,12 +13,12 @@ Not what you expect? Change your primary email on GitHub, then sign out and log 
 
 <%= form_with model: current_user, class: "pa2" do |f| %>
   <div class="flex items-center mb2">
-    <%= radio_button_tag :delivery_type, 'weekly', current_user.frequency == 'weekly', class: "mr2" %>
-    <%= f.label :delivery_type_weekly, "Weekly", class: "lh-copy" %>
+    <%= radio_button_tag :user_delivery_type, 'weekly', current_user.frequency == 'weekly', class: "mr2" %>
+    <%= f.label :delivery_type, "Weekly", value: "Weekly", class: "lh-copy" %>
   </div>
   <div class="flex items-center mb2">
-    <%= radio_button_tag :delivery_type, 'monthly', current_user.frequency == 'monthly', class: "mr2" %>
-    <%= f.label :delivery_type_monthly, "Monthly", class: "lh-copy" %>
+    <%= radio_button_tag :user_delivery_type, 'monthly', current_user.frequency == 'monthly', class: "mr2" %>
+    <%= f.label :delivery_type, "Monthly", value: "Monthly", class: "lh-copy" %>
   </div>
   <%= f.submit "Save", class: "pointer f6 br-pill bg-dark-green no-underline washed-green ba b--dark-green dim mt3 pv2 ph3 dib mr3" %>
 <% end %>

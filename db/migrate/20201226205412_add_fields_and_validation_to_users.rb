@@ -3,6 +3,6 @@ class AddFieldsAndValidationToUsers < ActiveRecord::Migration[6.1]
 
   def change
     add_column :users, :encrypted_gh_token, :string, null: false
-    add_index :users, :uid, unique: true, algorithm: :concurrently
+    add_index :users, :github_id, unique: true, algorithm: :concurrently
   end
 end

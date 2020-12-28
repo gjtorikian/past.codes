@@ -10,8 +10,6 @@ gem 'rails', '~> 6.1.0'
 # Use Postgres as the database for Active Record on Heroku
 gem 'pg', '~> 1.2'
 
-gem 'activerecord-postgres_enum', '~> 1.5'
-
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
@@ -37,6 +35,9 @@ gem 'devise', '~> 4.7'
 gem 'omniauth-github', '~> 1.4'
 
 gem 'graphlient', '~> 0.4'
+
+# Use Sidekiq for the jobs queue
+gem 'sidekiq', '~> 6.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -66,7 +67,7 @@ group :test do
   gem 'database_cleaner'
 
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 3.26'
+  gem 'capybara', '~> 3.26'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'

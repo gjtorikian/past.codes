@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  validates :uid, :frequency, :username, :email, :encrypted_gh_token, presence: true
+  validates :github_id, :frequency, :github_username, :email, :encrypted_gh_token, presence: true
+  enum frequency: [ :weekly, :monthly ]
 
   def self.find_or_create!(authorize_params, encrypted_token)
-    user = find_by(uid: authorize_params.fetch('uid'))
+    user = find_by(github_id: authorize_params.fetch('uid'))
     email = authorize_params.fetch('info').fetch('email')
 
     if user.present?
@@ -13,9 +14,9 @@ class User < ApplicationRecord
     end
 
     create!(
-      uid: authorize_params.fetch('uid'),
+      github_id: authorize_params.fetch('uid'),
       email: authorize_params.fetch('info').fetch('email'),
-      username: authorize_params.fetch('info').fetch('nickname'),
+      github_username: authorize_params.fetch('info').fetch('nickname'),
       encrypted_gh_token: encrypted_token
     )
   end

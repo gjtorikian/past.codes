@@ -6,9 +6,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user
 
+  def render404
+    render 'error/404', status: :not_found
+  end
+
   private
 
   def current_user
-    @current_user ||= User.find_by(uid: session[:uid])
+    @current_user ||= User.find_by(github_id: session[:uid])
   end
 end

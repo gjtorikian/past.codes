@@ -61,7 +61,6 @@ module ClientHelper
     encrypted_data = crypt.encrypt_and_sign text
     "#{salt}$$#{encrypted_data}"
   end
-  module_function :auth_encrypt
 
   def auth_decrypt(text)
     salt, data = text.split('$$')
@@ -70,5 +69,4 @@ module ClientHelper
     crypt = ActiveSupport::MessageEncryptor.new key
     crypt.decrypt_and_verify(data)
   end
-  module_function :auth_decrypt
 end
