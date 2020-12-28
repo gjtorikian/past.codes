@@ -4,20 +4,53 @@ require 'test_helper'
 
 class ReminderMailerTest < ActionMailer::TestCase
   test 'it works' do
+    starred_repositories = [
+      {
+        starredAt: Time.zone.today - 6.months,
+        era: '6 months',
+        repository: {
+          owner: 'pelya',
+          name: 'commandergenius'
+        }
+      },
+      {
+        starredAt: Time.zone.today - 6.months,
+        era: '6 months',
+        repository: {
+          owner: 'kivikakk',
+          name: 'koino'
+
+        }
+      },
+      {
+        starredAt: Time.zone.today - 1.year,
+        era: '1 year',
+        repository: {
+          owner: 'curl',
+          name: 'curl'
+        }
+      },
+      {
+        starredAt: Time.zone.today - 2.years,
+        era: '2 years',
+        repository: {
+          owner: 'jekyll',
+          name: 'jekyll'
+        }
+      }
+    ]
+
     # Create the email and store it for further assertions
-    # email = ReminderMailerTest.create_invite("me@example.com",
-    #                                  "friend@example.com", Time.now)
+    email = ReminderMailer.reminder_email('you@example.com', 'gjtorikian', starred_repositories)
 
-    # # Send the email, then test that it got queued
-    # assert_emails 1 do
-    #   email.deliver_now
-    # end
+    # Send the email, then test that it got queued
+    assert_emails 1 do
+      email.deliver_now
+    end
 
-    # # text_part, html_part
-    # # Test the body of the sent email contains what we expect it to
-    # assert_equal ["me@example.com"], email.from
-    # assert_equal ["friend@example.com"], email.to
-    # assert_equal "You have been invited by me@example.com", email.subject
-    # assert_equal read_fixture("invite").join, email.body.to_s
+    # Test the body of the sent email contains what we expect it to
+    assert_equal ['from@example.com'], email.from
+    assert_equal ['you@example.com'], email.to
+    assert_equal '[Pastcodes] Latest report', email.subject
   end
 end

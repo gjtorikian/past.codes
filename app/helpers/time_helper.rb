@@ -9,5 +9,4 @@ module TimeHelper
       Time.zone.today.next_month.beginning_of_month
     end.strftime('%B %d, %Y')
   end
-  module_function :next_date
 end

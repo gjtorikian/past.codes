@@ -45,9 +45,13 @@ module ClientHelper
     result = client.query(query, { username: github_username, after: end_cursor })
 
     starred_repos = result.data.user.starred_repositories.edges.map do |edge|
+      name, owner = edge.node.name_with_owner.split('/')
       {
         starredAt: edge.starred_at,
-        name_with_owner: edge.node.name_with_owner
+        repository: {
+          name: name,
+          owner: owner
+        }
       }
     end
 

@@ -39,6 +39,8 @@ gem 'graphlient', '~> 0.4'
 # Use Sidekiq for the jobs queue
 gem 'sidekiq', '~> 6.0'
 
+gem 'premailer-rails', '~> 1.11'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

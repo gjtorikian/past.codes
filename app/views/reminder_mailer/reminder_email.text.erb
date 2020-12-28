@@ -1,0 +1,19 @@
+A look back <%= @github_username %>’s starred repositories!
+==============================================================
+
+<% @view.starred_repositories.group_by { |starred_repository| starred_repository[:era] }.each do |era, starred_repositories| %>
+  ### From <%= era %> ago:
+  ------------------
+
+  <% starred_repositories.each do |data| %>
+  * <%= data[:repository][:owner] %> / <%= data[:repository][:name] %>
+    (<%= @view.github_repo_url(data[:repository][:owner], data[:repository][:name]) %>)
+
+  <% end %>
+  -----------------------------------------------------------------
+
+<% end %>
+
+Change frequency or unsubscribe: <%= @view.settings_url %>
+
+<3
