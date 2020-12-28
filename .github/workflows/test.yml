@@ -48,16 +48,20 @@ jobs:
         with:
           node-version: 14.2.0
 
-      - name: Cache npm dependencies
-        uses: actions/cache@v2
+      # https://github.com/actions/cache/blob/9c77c9dbfc97cd17e1add865174d4622362960f2/examples.md#node---yarn-2
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
-          key: npm-${{ hashFiles('./package-lock.json') }}
-          path: ~/.npm
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            npm-
+            ${{ runner.os }}-yarn-
 
-      - name: Install npm dependencies
-        run: npm ci --ignore-scripts --no-audit --no-progress --prefer-offline
+      - name: Install yarn dependencies
+        run: yarn --frozen-lockfile
 
       - name: Set up the Rails application
         env:
