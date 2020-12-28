@@ -8,6 +8,25 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta name="description" content="Remember the repositories you starred on GitHub.">
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- Facebook Open Graph data -->
+    <meta property="og:title" content="Pastcodes" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+    <meta property="og:image" content="/logo_social.png" />
+    <meta property="og:description" content="Remember the repositories you starred on GitHub." />
+    <meta property="og:site_name" content="Pastcodes" />
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@gjtorikian">
+    <meta name="twitter:title" content="Pastcodes">
+    <meta name="twitter:description" content="Remember the repositories you starred on GitHub.">
+    <meta name="twitter:creator" content="@gjtorikian">
+    <meta name="twitter:image:src" content="/logo_social.png">
   </head>
 
   <body class="bg-near-black light-gray">
