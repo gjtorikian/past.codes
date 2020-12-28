@@ -30,12 +30,12 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'can delete self' do
-    assert_difference("User.count", -1) do
-    as_user(@good_user) do
-      visit '/settings'
-      click_button 'Delete Account'
-      assert_match /Sorry/, page.body
-    end
+    assert_difference('User.count', -1) do
+      as_user(@good_user) do
+        visit '/settings'
+        click_button 'Delete Account'
+        assert_match(/Sorry/, page.body)
+      end
     end
   end
 end

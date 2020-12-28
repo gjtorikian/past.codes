@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def new; end
 
-  before_action :require_login, only: [:update, :destroy]
+  before_action :require_login, only: %i[update destroy]
 
   def update
     id = params[:id].to_i
