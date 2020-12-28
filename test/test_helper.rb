@@ -10,7 +10,7 @@ require 'webmock/minitest'
 require 'capybara/rails'
 require 'capybara/minitest'
 
-Dir[Rails.root.join('test/support/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join('test/support/**/*.rb')].sort.each { |f| require f }
 
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers

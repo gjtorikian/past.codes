@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 OmniAuth.config.test_mode = true
 
 OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
-  'provider'    => 'github',
-  'uid'         => 1,
-  'info'        => { 'nickname' => 'nickname' },
+  'provider' => 'github',
+  'uid' => 1,
+  'info' => { 'nickname' => 'nickname' },
   'credentials' => { 'token' => SecureRandom.hex(20) }
 )
 
 module SignInHelper
   def sign_in_as(user)
-    set_auth_details(user)
+    auth_details(user)
 
     get '/signin'
 
@@ -21,7 +23,7 @@ module SignInHelper
   end
 
   def as_user(user)
-    set_auth_details(user)
+    auth_details(user)
 
     visit '/signin'
 
@@ -30,7 +32,7 @@ module SignInHelper
     visit '/signout'
   end
 
-  private def set_auth_details(user)
+  private def auth_details(user)
     OmniAuth.config.mock_auth[:github].uid = user.github_id
     OmniAuth.config.mock_auth[:github].info = { 'nickname' => user.github_username, 'email' => user.email }
     OmniAuth.config.mock_auth[:github].credentials.token = user.encrypted_gh_token

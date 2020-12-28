@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get '/signin', action: :new, controller: 'sessions', as: :sign_in
   delete '/signout', action: :destroy, controller: 'sessions', as: :sign_out
   get '/auth/github/callback', action: :create, controller: 'sessions'
-  match '/auth/failure', to: 'sessions#failure', via: [:get, :post, :delete]
+  match '/auth/failure', to: 'sessions#failure', via: %i[get post delete]
 
   patch '/users', to: 'users#update', as: :user
 
