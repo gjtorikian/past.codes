@@ -4,4 +4,4 @@ set -e
 
 bin/rails db:migrate db:seed
 
-bin/rails server
+(bin/rails server & RUBYOPT=-w bundle exec sidekiq -q default -q mailers)

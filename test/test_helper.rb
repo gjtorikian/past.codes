@@ -9,6 +9,7 @@ require 'sidekiq/testing'
 require 'webmock/minitest'
 require 'capybara/rails'
 require 'capybara/minitest'
+require 'minitest/mock_expectations'
 
 Dir[Rails.root.join('test/support/**/*.rb')].sort.each { |f| require f }
 
@@ -39,4 +40,36 @@ class ActionDispatch::IntegrationTest
     Capybara.reset_sessions!
     Capybara.use_default_driver
   end
+end
+
+def stub_get_introspection_query
+  stub_request(:post, 'https://api.github.com/graphql')
+    .with(
+      body: /query IntrospectionQuery/,
+      headers: {
+        'Authorization' => 'bearer token',
+        'Content-Type' => 'application/json'
+      }
+    )
+    .to_return(status: 200, body: file_fixture('dummy_introspection_response.json').read, headers: {})
+end
+
+def stub_get_starred_repos(res, pagination_query: false)
+  stub_get_introspection_query
+
+  query = if pagination_query
+            /starredRepositories.+?"after":"Y3Vyc29yOnYyOpK5MjAyMC0xMi0wOVQxNDoyNDoyNCswMDowMM4O8QMK"/
+          else
+            /starredRepositories.+?"after":null/
+          end
+
+  stub_request(:post, 'https://api.github.com/graphql')
+    .with(
+      body: query,
+      headers: {
+        'Authorization' => 'bearer token',
+        'Content-Type' => 'application/json'
+      }
+    )
+    .to_return(status: 200, body: res, headers: {})
 end

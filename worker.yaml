@@ -1,0 +1,12 @@
+runtime: ruby
+env: flex
+service: worker
+
+entrypoint: bundle exec sidekiq
+
+health_check:
+  enable_health_check: False
+
+# Optional scaling configuration
+manual_scaling:
+  instances: 1

@@ -3,13 +3,20 @@
 good_user:
   github_id: 1123
   github_username: one
-  email: good_user@place.com
+  email_address: good_user@place.com
   encrypted_gh_token: 123
   frequency: :weekly
 
 bad_user:
   github_id: 4452
   github_username: two
-  email: bad_user@place.com
+  email_address: bad_user@place.com
   encrypted_gh_token: 245
+  frequency: :weekly
+
+gjtorikian:
+  github_id: 900001
+  github_username: gjtorikian
+  email_address: somewhere@someplace.com
+  encrypted_gh_token: 245111
   frequency: :weekly

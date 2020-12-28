@@ -1,0 +1,34 @@
+{
+  "data": {
+    "user": {
+      "starredRepositories": {
+        "totalCount": 197,
+        "edges": [
+          {
+            "starredAt": "2009-11-19T15:15:39Z",
+            "node": {
+              "nameWithOwner": "pelya/commandergenius"
+            }
+          },
+          {
+            "starredAt": "2014-02-11T21:23:19Z",
+            "node": {
+              "nameWithOwner": "jekyll/jekyll"
+            }
+          },
+          {
+            "starredAt": "2016-01-17T18:26:15Z",
+            "node": {
+              "nameWithOwner": "curl/curl"
+            }
+          }
+        ],
+        "pageInfo": {
+          "startCursor": "Y3Vyc29yOnYyOpK5MjAxNi0wMS0wNlQwMToxNjowNyswMDowMM4C-Ccc",
+          "hasNextPage": false,
+          "endCursor": "Y3Vyc29yOnYyOpK5MjAyMC0xMi0wOVQxNDoyNDoyNCswMDowMM4O8QMK"
+        }
+      }
+    }
+  }
+}

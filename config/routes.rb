@@ -14,5 +14,11 @@ Rails.application.routes.draw do
 
   get '/privacy', to: 'site#privacy'
 
+  get 'staff', to: 'staff#index'
+  require 'sidekiq/web'
+  constraints ->(request) { StaffController.staff_request?(request) } do
+    mount Sidekiq::Web => 'staff/sidekiq'
+  end
+
   match '*unmatched_route', to: 'application#render404', via: :all
 end

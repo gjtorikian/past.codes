@@ -34,7 +34,7 @@ module SignInHelper
 
   private def auth_details(user)
     OmniAuth.config.mock_auth[:github].uid = user.github_id
-    OmniAuth.config.mock_auth[:github].info = { 'nickname' => user.github_username, 'email' => user.email }
+    OmniAuth.config.mock_auth[:github].info = { 'nickname' => user.github_username, 'email' => user.email_address }
     OmniAuth.config.mock_auth[:github].credentials.token = user.encrypted_gh_token
   end
 end

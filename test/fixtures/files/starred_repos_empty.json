@@ -1,0 +1,16 @@
+{
+  "data": {
+    "user": {
+      "login": "satyanadella",
+      "starredRepositories": {
+        "totalCount": 0,
+        "edges": [],
+        "pageInfo": {
+          "startCursor": null,
+          "hasNextPage": false,
+          "endCursor": null
+        }
+      }
+    }
+  }
+}

@@ -75,6 +75,8 @@ group :test do
   gem 'minitest-focus'
 
   gem 'webmock', '~> 3.8'
+
+  gem 'minitest-mock_expectations', '~> 1.1'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
