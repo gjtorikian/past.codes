@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   get '/auth/github/callback', action: :create, controller: 'sessions'
   match '/auth/failure', to: 'sessions#failure', via: %i[get post delete]
 
-  patch '/users', to: 'users#update', as: :user
+  patch '/users/:id', to: 'users#update', as: :user
+  delete '/users/:id', action: :destroy, controller: 'users'
 
   get '/settings', action: :index, controller: 'settings'
 

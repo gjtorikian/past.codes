@@ -5,6 +5,14 @@
 Remember the repositories you starred on GitHub.
 </h2>
 
+<% if signed_in? %>
+
+<p class="f4 lh-copy measure">
+Hello, <%= current_user.github_username %>!
+</p>
+
+<% end %>
+
 <p class="f4 lh-copy measure">
 Pastcodes will send you weekly (or if you prefer, monthly!) emails
 that remind you of the repositories you starred on GitHub. It'll let

@@ -11,7 +11,7 @@ Not what you expect? Change your primary email on GitHub, then sign out and log 
 
 <h4>How often would you like to receive emails?</h4>
 
-<%= form_with model: current_user, class: "pa2" do |f| %>
+<%= form_with model: current_user, url: user_path(current_user.id), class: "pa2" do |f| %>
   <div class="flex items-center mb2">
     <%= radio_button_tag :user_delivery_type, 'weekly', current_user.frequency == 'weekly', class: "mr2" %>
     <%= f.label :delivery_type, "Weekly", value: "Weekly", class: "lh-copy" %>
@@ -25,4 +25,16 @@ Not what you expect? Change your primary email on GitHub, then sign out and log 
 
 <p class="f5 lh-copy measure">
   Your next email is scheduled for <strong><%= next_date(current_user.frequency) %></strong>.
+</p>
+
+<hr>
+
+<p class="f6 pt4">
+No longer interested? Click the button below to be immediately removed.
+
+
+<%= form_with(model: current_user, url: user_path(current_user.id), method: "delete") do |f| %>
+  <%= f.submit "Delete Account", class: "pointer f6 br-pill bg-dark-red no-underline washed-red ba b--dark-red dim mt3 pv2 ph3 dib mr3" %>
+<% end %>
+
 </p>

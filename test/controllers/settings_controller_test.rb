@@ -12,7 +12,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to '/'
   end
 
-  test 'it works' do
+  test 'it loads' do
     sign_in_as(@good_user)
     assert session[:uid]
     get '/settings'
@@ -26,6 +26,16 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
       click_button 'Save'
       @good_user.reload
       assert_equal 'monthly', @good_user.frequency
+    end
+  end
+
+  test 'can delete self' do
+    assert_difference("User.count", -1) do
+    as_user(@good_user) do
+      visit '/settings'
+      click_button 'Delete Account'
+      assert_match /Sorry/, page.body
+    end
     end
   end
 end
