@@ -68,6 +68,7 @@ jobs:
           RAILS_ENV: test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          CRYPT_KEEPER: secretz
         run: |
           sudo apt-get -yqq install libpq-dev
           bundle exec rails db:create db:schema:load --trace
