@@ -24,6 +24,7 @@ module Mailers
       "#{ENV['BASE_URL']}/settings"
     end
 
+    # sorts newest to oldest
     private def sort_by_starred_at(starred_repositories)
       starred_repositories.sort do |a, b|
         if a[:starredAt] < b[:starredAt]
