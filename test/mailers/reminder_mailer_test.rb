@@ -49,7 +49,7 @@ class ReminderMailerTest < ActionMailer::TestCase
     end
 
     # Test the body of the sent email contains what we expect it to
-    assert_equal ['from@example.com'], email.from
+    assert_equal ['no-reply@past.codes'], email.from
     assert_equal ['you@example.com'], email.to
     assert_equal '[Pastcodes] Latest report', email.subject
   end
