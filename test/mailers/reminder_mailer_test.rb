@@ -40,17 +40,20 @@ class ReminderMailerTest < ActionMailer::TestCase
       }
     ]
 
-    # Create the email and store it for further assertions
-    email = ReminderMailer.reminder_email('you@example.com', 'gjtorikian', starred_repositories)
+    t = Time.zone.local(2019, 3, 1, 10, 5, 0)
+    Timecop.freeze(t) do
+      # Create the email and store it for further assertions
+      email = ReminderMailer.reminder_email('you@example.com', 'gjtorikian', starred_repositories)
 
-    # Send the email, then test that it got queued
-    assert_emails 1 do
-      email.deliver_now
+      # Send the email, then test that it got queued
+      assert_emails 1 do
+        email.deliver_now
+      end
+
+      # Test the body of the sent email contains what we expect it to
+      assert_equal ['no-reply@past.codes'], email.from
+      assert_equal ['you@example.com'], email.to
+      assert_equal '[Pastcodes] Latest report for March 1, 2019', email.subject
     end
-
-    # Test the body of the sent email contains what we expect it to
-    assert_equal ['no-reply@past.codes'], email.from
-    assert_equal ['you@example.com'], email.to
-    assert_equal '[Pastcodes] Latest report', email.subject
   end
 end

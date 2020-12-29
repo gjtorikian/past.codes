@@ -80,6 +80,8 @@ group :test do
   gem 'webmock', '~> 3.8'
 
   gem 'minitest-mock_expectations', '~> 1.1'
+
+  gem 'timecop', '~> 0.9'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

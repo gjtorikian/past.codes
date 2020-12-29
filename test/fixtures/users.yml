@@ -24,7 +24,7 @@ gjtorikian:
   encrypted_gh_token: secretz
   frequency: :weekly
 
-monthly:
+monthly_user:
   id: 4
   github_id: 1092
   github_username: monthly

@@ -5,6 +5,7 @@ require 'test_helper'
 class SettingsControllerTest < ActionDispatch::IntegrationTest
   def setup
     @good_user = users(:good_user)
+    @monthly_user = users(:monthly_user)
   end
 
   test 'requires auth' do
@@ -17,6 +18,26 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert session[:uid]
     get '/settings'
     assert_response :success
+  end
+
+  test 'it shows next weekly date' do
+    t = Time.zone.local(2019, 3, 1, 10, 5, 0)
+    Timecop.freeze(t) do
+      sign_in_as(@good_user)
+      assert session[:uid]
+      get '/settings'
+      assert_match(/March 4, 2019/, response.body)
+    end
+  end
+
+  test 'it shows next monthly date' do
+    t = Time.zone.local(2019, 3, 3, 10, 5, 0)
+    Timecop.freeze(t) do
+      sign_in_as(@monthly_user)
+      assert session[:uid]
+      get '/settings'
+      assert_match(/April 1, 2019/, response.body)
+    end
   end
 
   test 'can swap settings' do
