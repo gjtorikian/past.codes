@@ -1,4 +1,4 @@
-A look back <%= @github_username %>’s starred repositories!
+A look back <%= @github_username %>’s starred repositories...
 ==============================================================
 
 <% @view.starred_repositories.group_by { |starred_repository| starred_repository[:era] }.each do |era, starred_repositories| %>
@@ -9,6 +9,11 @@ A look back <%= @github_username %>’s starred repositories!
   * <%= data[:repository][:owner] %> / <%= data[:repository][:name] %>
     (<%= @view.github_repo_url(data[:repository][:owner], data[:repository][:name]) %>)
 
+    <% if data[:repository][:full_description].present? %>
+
+    <%= data[:repository][:full_description] %>
+
+    <% end %>
   <% end %>
   -----------------------------------------------------------------
 

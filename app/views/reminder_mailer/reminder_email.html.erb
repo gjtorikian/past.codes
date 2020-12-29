@@ -4,13 +4,13 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
      <%= render :partial => "reminder_mailer/styles" %>
   </head>
-  <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-size: 14px; height: 100% !important; line-height: 1.5; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; width: 100% !important; background-color: #fff;">
+  <body>
 
-  <table class="body" style="box-sizing: border-box; border-collapse: separate !important; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background-color: #fff;" width="100%" bgcolor="#fff">
+  <table class="body" width="100%" bgcolor="#fff">
     <tr>
-      <td style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-size: 14px; vertical-align: top;" valign="top"></td>
-      <td class="container" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-size: 14px; vertical-align: top; display: block; margin: 0 auto !important; max-width: 580px; padding: 24px; width: 580px;" width="580" valign="top">
-        <div class="content" style="box-sizing: border-box; display: block; margin: 0 auto; max-width: 580px;">
+      <td valign="top"></td>
+      <td class="container" width="580" valign="top">
+        <div class="content">
 
           <!--email content-->
 
@@ -18,14 +18,14 @@
 
           <%= render :partial => "reminder_mailer/starred_repositories" %>
 
-          <div class="footer" style="box-sizing: border-box; clear: both; width: 100%;">
-            <hr class="footer-hr" style="height: 0; overflow: visible; margin-top: 24px; border: 0; border-top: 1px solid #e1e4e8; color: #6A737D; font-size: 12px; line-height: 18px; margin-bottom: 30px;">
-            <div class="footer-links" style="box-sizing: border-box; color: #6A737D; font-size: 12px; line-height: 18px;">
-              <p class="footer-text" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-weight: normal; margin: 0; margin-bottom: 15px; color: #6A737D; font-size: 12px; line-height: 18px;">
-                <a href="<%= @view.settings_url %>" style="box-sizing: border-box; color: #6A737D; font-size: 12px; line-height: 18px; text-decoration: none;">Change frequency or unsubscribe</a>
+          <div class="footer">
+            <hr class="footer-hr">
+            <div class="footer-links">
+              <p class="footer-text">
+                <a class="footer" href="<%= @view.settings_url %>">Change frequency or unsubscribe</a>
               </p>
             </div>
-            <p class="footer-text" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-weight: normal; margin: 0; margin-bottom: 15px; color: #6A737D; font-size: 12px; line-height: 18px;"><3</p>
+            <p class="footer-text"><3</p>
           </div>
         </div>
 

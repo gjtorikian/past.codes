@@ -11,7 +11,11 @@ class ReminderMailerPreview < ActionMailer::Preview
         era: distance_of_time_in_words(Time.zone.today - 6.months, Time.zone.today),
         repository: {
           owner: 'pelya',
-          name: 'commandergenius'
+          name: 'commandergenius',
+          description: 'Port of SDL library and several games to the Android OS.',
+          primary_language: {
+            name: 'C'
+          }
         }
       },
       {
@@ -19,8 +23,17 @@ class ReminderMailerPreview < ActionMailer::Preview
         era: distance_of_time_in_words(Time.zone.today - 6.months, Time.zone.today),
         repository: {
           owner: 'kivikakk',
-          name: 'koino'
-
+          name: 'koino',
+          description: 'CommonMark + GFM compatible Markdown parser and renderer',
+          primary_language: {
+            name: 'Zig'
+          },
+          funding_links: [
+            {
+              "platform": 'GITHUB',
+              "url": 'https://github.com/kivikakk'
+            }
+          ]
         }
       },
       {

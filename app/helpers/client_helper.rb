@@ -13,6 +13,14 @@ module ClientHelper
             starredAt
             node {
               nameWithOwner
+              description
+              primaryLanguage {
+                name
+              }
+              fundingLinks {
+                platform
+                url
+              }
             }
           }
           pageInfo {
@@ -46,11 +54,17 @@ module ClientHelper
 
     starred_repos = result.data.user.starred_repositories.edges.map do |edge|
       name, owner = edge.node.name_with_owner.split('/')
+      description = edge.node.description&.strip
+      primary_language = edge.node.primary_language
+      funding_links = edge.node.primary_language
       {
         starredAt: edge.starred_at,
         repository: {
           name: name,
-          owner: owner
+          owner: owner,
+          description: description,
+          primary_language: primary_language,
+          funding_links: funding_links
         }
       }
     end
