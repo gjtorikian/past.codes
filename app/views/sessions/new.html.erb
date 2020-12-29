@@ -1,0 +1,14 @@
+<h1>Authenticating with GitHub...</h1>
+<hr>
+
+<p class="f4 lh-copy measure">
+If you're not automatically redirected, please click here:
+</p>
+
+<p class="f4 lh-copy measure">
+<%= link_to 'Sign in with GitHub', '/auth/github',
+    id: 'github-sign-in', class: 'no-underline f6 link dim br3 ph3 pv2 mb2 dib white bg-blue inline-flex items-center', method: :post %>
+</p>
+
+<%= javascript_tag 'document.getElementById("github-sign-in").click();' %>
+

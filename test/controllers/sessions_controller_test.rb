@@ -7,9 +7,9 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     @good_user = users(:good_user)
   end
 
-  test 'GET #new redirects to /auth/github' do
+  test 'GET #new takes you to POST button page' do
     get '/signin'
-    assert_redirected_to '/auth/github'
+    assert_match /Authenticating with GitHub.../, response.body
   end
 
   test 'GET #new redirects to /root if already logged in' do

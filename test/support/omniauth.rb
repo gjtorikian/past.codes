@@ -14,8 +14,9 @@ module SignInHelper
     auth_details(user)
 
     get '/signin'
+    # https://github.com/digitalocean/hacktoberfest/pull/351
+    post '/auth/github' # this clicks the button to /auth/github
 
-    follow_redirect! # this now goes to /auth/github
     follow_redirect! # this "comes back" from github and goes to /auth/github/callback
     follow_redirect! # now we are at /
 
@@ -26,6 +27,8 @@ module SignInHelper
     auth_details(user)
 
     visit '/signin'
+
+    click_on 'Sign in with GitHub'
 
     yield
 
