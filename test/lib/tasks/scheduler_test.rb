@@ -15,17 +15,39 @@ class SchedulerTaskTest < ActionDispatch::IntegrationTest
     assert_equal @weekly_users.count + @monthly_users.count, @all_users.count
   end
 
-  test 'queues for weekly' do
-    assert_enqueued_with(job: SendEmailJob) do
-      Rake::Task['scheduler:weekly_delivery'].invoke
+  test 'queues for valid weekly' do
+    t = Time.zone.local(2020, 12, 7, 12, 0, 0)
+    Timecop.freeze(t) do
+      assert_enqueued_with(job: SendEmailJob) do
+        Rake::Task['scheduler:weekly_delivery'].invoke
+      end
+      assert_enqueued_jobs @weekly_users.count
     end
-    assert_enqueued_jobs @weekly_users.count
   end
 
-  test 'queues for monthly' do
-    assert_enqueued_with(job: SendEmailJob) do
-      Rake::Task['scheduler:monthly_delivery'].invoke
+  test 'does nothing for invalid weekly' do
+    t = Time.zone.local(2020, 12, 8, 12, 0, 0)
+    Timecop.freeze(t) do
+      Rake::Task['scheduler:weekly_delivery'].invoke
+      assert_enqueued_jobs 0
     end
-    assert_enqueued_jobs @monthly_users.count
+  end
+
+  test 'queues for valid monthly' do
+    t = Time.zone.local(2020, 12, 1, 12, 0, 0)
+    Timecop.freeze(t) do
+      assert_enqueued_with(job: SendEmailJob) do
+        Rake::Task['scheduler:monthly_delivery'].invoke
+      end
+      assert_enqueued_jobs @monthly_users.count
+    end
+  end
+
+  test 'does nothing for invalid monthly' do
+    t = Time.zone.local(2020, 11, 30, 12, 0, 0)
+    Timecop.freeze(t) do
+      Rake::Task['scheduler:monthly_delivery'].invoke
+      assert_enqueued_jobs 0
+    end
   end
 end
