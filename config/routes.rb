@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  match '(*any)',
+        to: redirect(subdomain: ''),
+        via: :all,
+        constraints: lambda { |r| r.subdomain.present? && r.subdomain != 'www'}
+
   root to: 'site#index'
 
   get '/signin', action: :new, controller: 'sessions', as: :sign_in
