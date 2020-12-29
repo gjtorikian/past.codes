@@ -9,9 +9,9 @@ class SessionsController < ApplicationController
     if signed_in?
       redirect_to '/'
     else
-    # This page makes a POST request to /auth/github
-    # The POST request has a CSRF token which solves CVE-2015-9284
-    render 'sessions/new'
+      # This page makes a POST request to /auth/github
+      # The POST request has a CSRF token which solves CVE-2015-9284
+      render 'sessions/new'
     end
   end
 

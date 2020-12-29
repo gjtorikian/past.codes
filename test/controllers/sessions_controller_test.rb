@@ -9,7 +9,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'GET #new takes you to POST button page' do
     get '/signin'
-    assert_match /Authenticating with GitHub.../, response.body
+    assert_match(/Authenticating with GitHub.../, response.body)
   end
 
   test 'GET #new redirects to /root if already logged in' do
