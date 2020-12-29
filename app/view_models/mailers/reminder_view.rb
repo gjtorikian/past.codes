@@ -21,7 +21,7 @@ module Mailers
     end
 
     def settings_url
-      "#{ENV['BASE_URL']}/settings"
+      "#{BASE_URL}/settings"
     end
 
     # sorts newest to oldest

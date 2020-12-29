@@ -1,24 +1,5 @@
-# README
+# Pastcodes
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+![./public/logo_social.png](Pastcodes)
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Pastcodes will send you weekly (or if you prefer, monthly!) emails that remind you of the repositories you starred on GitHub. It'll let you know if these repositories are looking for help, or sponsorship, and recommend related projects.

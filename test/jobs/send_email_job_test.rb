@@ -3,9 +3,10 @@
 require 'test_helper'
 
 class SendEmailJobTest < ActiveJob::TestCase
+  include ClientHelper
+
   def setup
-    # this is just `token`
-    @encrypted_gh_token = '43115816c34705aca1b1c53cc474f5fe19e7daaf7b812862dcab178cbd5c7c90$$DOv+9vqcjik9HIja3xvT--Sdq4+XK1qmtUUXJy--pYh3d39cELjWNeNuMqhxgw=='
+    @encrypted_gh_token = auth_encrypt('secretztoken')
   end
 
   test 'it prepares an email' do

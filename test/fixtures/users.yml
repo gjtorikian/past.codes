@@ -5,7 +5,7 @@ good_user:
   github_id: 1123
   github_username: good
   email_address: good_user@place.com
-  encrypted_gh_token: 123
+  encrypted_gh_token: dhgdg
   frequency: :weekly
 
 bad_user:
@@ -13,7 +13,7 @@ bad_user:
   github_id: 4452
   github_username: bad
   email_address: bad_user@place.com
-  encrypted_gh_token: 245
+  encrypted_gh_token: asdads
   frequency: :weekly
 
 gjtorikian:
@@ -21,7 +21,7 @@ gjtorikian:
   github_id: 900001
   github_username: gjtorikian
   email_address: somewhere@someplace.com
-  encrypted_gh_token: 245111
+  encrypted_gh_token: secretz
   frequency: :weekly
 
 monthly:
@@ -29,5 +29,5 @@ monthly:
   github_id: 1092
   github_username: monthly
   email_address: somewhere@someplace.com
-  encrypted_gh_token: 0012
+  encrypted_gh_token: zxczxc
   frequency: :monthly

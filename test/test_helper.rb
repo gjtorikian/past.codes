@@ -47,7 +47,7 @@ def stub_get_introspection_query
     .with(
       body: /query IntrospectionQuery/,
       headers: {
-        'Authorization' => 'bearer token',
+        'Authorization' => 'bearer secretztoken',
         'Content-Type' => 'application/json'
       }
     )
@@ -67,7 +67,7 @@ def stub_get_starred_repos(res, pagination_query: false)
     .with(
       body: query,
       headers: {
-        'Authorization' => 'bearer token',
+        'Authorization' => 'bearer secretztoken',
         'Content-Type' => 'application/json'
       }
     )
