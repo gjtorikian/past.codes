@@ -23,3 +23,11 @@ gjtorikian:
   email_address: somewhere@someplace.com
   encrypted_gh_token: 245111
   frequency: :weekly
+
+monthly:
+  id: 4
+  github_id: 1092
+  github_username: monthly
+  email_address: somewhere@someplace.com
+  encrypted_gh_token: 0012
+  frequency: :monthly
