@@ -50,6 +50,7 @@ namespace :mailer do
         }
       }
     ]
-    pp ReminderMailer.reminder_email(ENV['TEST_EMAIL_ADDRESS'], 'gjtorikian', starred_repositories)
+    pp mailer = ReminderMailer.reminder_email(ENV['TEST_EMAIL_ADDRESS'], 'gjtorikian', starred_repositories)
+    pp mailer.deliver_now
   end
 end
