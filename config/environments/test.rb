@@ -59,7 +59,4 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
-
-  # remove www / change default "www.example.com" domain
-  Rails.application.routes.default_url_options[:host] = 'example.com'
 end

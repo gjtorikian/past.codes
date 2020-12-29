@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   match '(*any)',
         to: redirect(subdomain: ''),
         via: :all,
-        constraints: ->(r) { r.subdomain.present? && r.subdomain != 'www' }
+        constraints: ->(r) { r.subdomain.present? && r.subdomain == 'www' }
 
   root to: 'site#index'
 

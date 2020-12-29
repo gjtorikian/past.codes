@@ -35,10 +35,22 @@ class ActionDispatch::IntegrationTest
   # Make `assert_*` methods behave like Minitest assertions
   include Capybara::Minitest::Assertions
 
+  Capybara.app_host = 'http://example.com'
+
   # Reset sessions and driver between tests
   teardown do
     Capybara.reset_sessions!
     Capybara.use_default_driver
+  end
+
+  # cannot for the life of me figure out how to set this env var;
+  # without it, all requests attempt to go to the www- version
+  # which adds an additional redirect
+  ActiveSupport.on_load(:action_dispatch_request) do
+    def initialize(env)
+      super(env)
+      @env['HTTP_HOST'] = @env['HTTP_HOST'].sub(/www\./, '') if @env.present?
+    end
   end
 end
 
