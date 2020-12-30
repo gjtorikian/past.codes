@@ -40,6 +40,26 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'it shows next monthly date on 31/30 differences' do
+    t = Time.zone.local(2019, 3, 31, 10, 5, 0) # March 31 is last day
+    Timecop.freeze(t) do
+      sign_in_as(@monthly_user)
+      assert session[:uid]
+      get '/settings'
+      assert_match(/April 1, 2019/, response.body)
+    end
+  end
+
+  test 'it shows next monthly date on 31/28 differences' do
+    t = Time.zone.local(2019, 1, 31, 10, 5, 0) # January 31 is last day
+    Timecop.freeze(t) do
+      sign_in_as(@monthly_user)
+      assert session[:uid]
+      get '/settings'
+      assert_match(/February 1, 2019/, response.body)
+    end
+  end
+
   test 'can swap settings' do
     as_user(@good_user) do
       visit '/settings'

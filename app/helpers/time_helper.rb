@@ -6,7 +6,7 @@ module TimeHelper
            when 'weekly'
              Time.zone.today.next_week.beginning_of_week
            when 'monthly'
-             Time.zone.today.next_month.beginning_of_month
+             (Time.zone.today + 1.month).beginning_of_month
            end
     format_time(date)
   end
