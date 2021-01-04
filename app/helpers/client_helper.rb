@@ -73,7 +73,7 @@ module ClientHelper
       primary_language = edge.node.primary_language
       funding_links = edge.node.respond_to?(:funding_links) ? edge.node.funding_links : []
       {
-        starredAt: edge.starred_at,
+        starred_at: edge.starred_at.to_datetime,
         repository: {
           name: name,
           owner: owner,

@@ -6,7 +6,7 @@ class ReminderMailerTest < ActionMailer::TestCase
   def setup
     @starred_repositories = [
       {
-        starredAt: Time.zone.today - 6.months,
+        starred_at: Time.zone.today - 6.months,
         era: '6 months',
         repository: {
           owner: 'pelya',
@@ -14,7 +14,7 @@ class ReminderMailerTest < ActionMailer::TestCase
         }
       },
       {
-        starredAt: Time.zone.today - 6.months,
+        starred_at: Time.zone.today - 6.months,
         era: '6 months',
         repository: {
           owner: 'kivikakk',
@@ -23,7 +23,7 @@ class ReminderMailerTest < ActionMailer::TestCase
         }
       },
       {
-        starredAt: Time.zone.today - 1.year,
+        starred_at: Time.zone.today - 1.year,
         era: '1 year',
         repository: {
           owner: 'curl',
@@ -31,7 +31,7 @@ class ReminderMailerTest < ActionMailer::TestCase
         }
       },
       {
-        starredAt: Time.zone.today - 2.years,
+        starred_at: Time.zone.today - 2.years,
         era: '2 years',
         repository: {
           owner: 'jekyll',

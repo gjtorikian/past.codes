@@ -7,7 +7,7 @@ class ReminderMailerPreview < ActionMailer::Preview
   def starred_repositories
     [
       {
-        starredAt: Time.zone.today - 6.months,
+        starred_at: Time.zone.today - 6.months,
         era: distance_of_time_in_words(Time.zone.today - 6.months, Time.zone.today),
         repository: {
           owner: 'pelya',
@@ -17,7 +17,7 @@ class ReminderMailerPreview < ActionMailer::Preview
         }
       },
       {
-        starredAt: Time.zone.today - 6.months,
+        starred_at: Time.zone.today - 6.months,
         era: distance_of_time_in_words(Time.zone.today - 6.months, Time.zone.today),
         repository: {
           owner: 'kivikakk',
@@ -33,7 +33,7 @@ class ReminderMailerPreview < ActionMailer::Preview
         }
       },
       {
-        starredAt: Time.zone.today - 1.year,
+        starred_at: Time.zone.today - 1.year,
         era: distance_of_time_in_words(Time.zone.today - 1.year, Time.zone.today),
         repository: {
           owner: 'curl',
@@ -41,7 +41,7 @@ class ReminderMailerPreview < ActionMailer::Preview
         }
       },
       {
-        starredAt: Time.zone.today - 2.years,
+        starred_at: Time.zone.today - 2.years,
         era: distance_of_time_in_words(Time.zone.today - 2.years, Time.zone.today),
         repository: {
           owner: 'jekyll',

@@ -38,19 +38,19 @@ module Mailers
     # sorts newest to oldest
     def sort_by_starred_at!
       @starred_repositories.sort! do |a, b|
-        if a[:starredAt] < b[:starredAt]
+        if a[:starred_at] < b[:starred_at]
           1
-        elsif a[:starredAt] > b[:starredAt]
+        elsif a[:starred_at] > b[:starred_at]
           -1
         else
-          a[:starredAt] <=> b[:starredAt]
+          a[:starred_at] <=> b[:starred_at]
         end
       end
     end
 
     def filter_by_starred_at!
       @starred_repositories = @starred_repositories.each_with_object([]) do |item, arr|
-        next unless within_range?(item[:starredAt], @frequency)
+        next unless within_range?(item[:starred_at], @frequency)
 
         arr << item
       end
@@ -58,9 +58,9 @@ module Mailers
 
     def append_era!
       @starred_repositories = @starred_repositories.each_with_object([]) do |item, arr|
-        next if item[:starredAt] > 6.months.ago
+        next if item[:starred_at] > 6.months.ago
 
-        item[:era] = distance_of_time_in_words(item[:starredAt], Time.zone.today)
+        item[:era] = distance_of_time_in_words(item[:starred_at], Time.zone.today)
         arr << item
       end
     end

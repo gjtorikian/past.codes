@@ -4,7 +4,7 @@ namespace :mailer do
   task preview: :environment do
     starred_repositories = [
       {
-        starredAt: Time.zone.today - 6.months,
+        starred_at: Time.zone.today - 6.months,
         era: '6 months ago',
         repository: {
           owner: 'pelya',
@@ -16,7 +16,7 @@ namespace :mailer do
         }
       },
       {
-        starredAt: Time.zone.today - 6.months,
+        starred_at: Time.zone.today - 6.months,
         era: '6 months ago',
         repository: {
           owner: 'kivikakk',
@@ -34,7 +34,7 @@ namespace :mailer do
         }
       },
       {
-        starredAt: Time.zone.today - 1.year,
+        starred_at: Time.zone.today - 1.year,
         era: '1 year ago',
         repository: {
           owner: 'curl',
@@ -42,7 +42,7 @@ namespace :mailer do
         }
       },
       {
-        starredAt: Time.zone.today - 2.years,
+        starred_at: Time.zone.today - 2.years,
         era: '2 years ago',
         repository: {
           owner: 'jekyll',
