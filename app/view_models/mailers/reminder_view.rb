@@ -4,11 +4,12 @@ module Mailers
   class ReminderView < ViewModel
     include TimeHelper
 
-    attr_reader :starred_repositories
+    attr_reader :github_username, :has_public_repo_scope, :starred_repositories
 
-    def initialize(github_username, starred_repositories)
+    def initialize(github_username, starred_repositories, has_public_repo_scope:)
       super
       @github_username = github_username
+      @has_public_repo_scope = has_public_repo_scope
       @starred_repositories = starred_repositories
 
       # TODO: probably a better way to arrange this but whatever
@@ -57,8 +58,7 @@ module Mailers
 
         full_description = []
         full_description << repo[:description].sub(/(?:[!.]+\s*$)|(?<=\S$)/, '.') if repo[:description].present?
-
-        full_description << "It appears to be written in #{repo[:primary_language][:name]}." if repo[:primary_language].present? && repo[:primary_language][:name].present?
+        full_description << "It appears to be written in #{repo[:primary_language].name}." if repo[:primary_language].present? && repo[:primary_language].name.present?
 
         full_description << "They're looking for sponsors!" if repo[:funding_links].present?
 

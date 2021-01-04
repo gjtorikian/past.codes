@@ -3,6 +3,12 @@
 </div>
 
 <p class="alt-lead">
-  A look back <strong>@<%= @github_username %>’s</strong> starred repositories...
+  A look back <strong>@<%= @view.github_username %>'s</strong> starred repositories...
 </p>
 
+<% unless @view.has_public_repo_scope.present? %>
+<div class="warning">
+  Pastcodes needs additional OAuth access to provide you with more data!
+  Could you please <a class="link" href="https://past.codes">reauthenticate at https://past.codes</a>?
+</div>
+<% end %>

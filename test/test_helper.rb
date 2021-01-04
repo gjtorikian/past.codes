@@ -54,6 +54,11 @@ class ActionDispatch::IntegrationTest
   end
 end
 
+def stub_get_scope_access(headers: {})
+  stub_request(:get, 'https://api.github.com/user')
+    .to_return(status: 200, body: '', headers: headers)
+end
+
 def stub_get_introspection_query
   stub_request(:post, 'https://api.github.com/graphql')
     .with(
@@ -67,6 +72,7 @@ def stub_get_introspection_query
 end
 
 def stub_get_starred_repos(res, pagination_query: false)
+  stub_get_scope_access
   stub_get_introspection_query
 
   query = if pagination_query

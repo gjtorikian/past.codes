@@ -54,7 +54,7 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
         }
       }
     ]
-    @view = Mailers::ReminderView.new('gjtorikian', @starred_repositories)
+    @view = Mailers::ReminderView.new('gjtorikian', @starred_repositories, has_public_repo_scope: false)
   end
 
   test 'it sorts repos by starred at' do
@@ -112,7 +112,7 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
       }
     ]
 
-    view = Mailers::ReminderView.new('gjtorikian', starred_repositories)
+    view = Mailers::ReminderView.new('gjtorikian', starred_repositories, has_public_repo_scope: false)
 
     descriptions = view.assemble_descriptions!.map { |h| h.dig :repository, :full_description }.filter(&:present?)
 
@@ -127,9 +127,7 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
           owner: 'gjtorikian',
           name: 'repo with desc and language',
           description: 'Some great project.',
-          primary_language: {
-            name: 'Ruby'
-          }
+          primary_language: OpenStruct.new(name: 'Ruby')
         }
       },
       {
@@ -137,13 +135,11 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
         repository: {
           owner: 'gjtorikian',
           name: 'repo with no desc, but language',
-          primary_language: {
-            name: 'Rust'
-          }
+          primary_language: OpenStruct.new(name: 'Rust')
         }
       }
     ]
-    view = Mailers::ReminderView.new('gjtorikian', starred_repositories)
+    view = Mailers::ReminderView.new('gjtorikian', starred_repositories, has_public_repo_scope: false)
     descriptions = view.assemble_descriptions!.map { |h| h.dig :repository, :full_description }.filter(&:present?)
 
     assert_equal ['Some great project. It appears to be written in Ruby.', 'It appears to be written in Rust.'], descriptions
@@ -157,9 +153,7 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
           owner: 'gjtorikian',
           name: 'repo with desc, language, and funding links',
           description: 'Some amazing project!!',
-          primary_language: {
-            name: 'Rust'
-          },
+          primary_language: OpenStruct.new(name: 'Rust'),
           funding_links: [
             {
               "platform": 'GITHUB',
@@ -177,9 +171,7 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
         repository: {
           owner: 'gjtorikian',
           name: 'repo with no desc, but language and funding links',
-          primary_language: {
-            name: 'PHP'
-          },
+          primary_language: OpenStruct.new(name: 'PHP'),
           funding_links: [
             {
               "platform": 'GITHUB',
@@ -228,7 +220,7 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
         }
       }
     ]
-    view = Mailers::ReminderView.new('gjtorikian', starred_repositories)
+    view = Mailers::ReminderView.new('gjtorikian', starred_repositories, has_public_repo_scope: false)
     descriptions = view.assemble_descriptions!.map { |h| h.dig :repository, :full_description }.filter(&:present?)
 
     assert_equal ["Some amazing project. It appears to be written in Rust. They're looking for sponsors!", \

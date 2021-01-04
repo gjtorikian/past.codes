@@ -13,9 +13,7 @@ class ReminderMailerPreview < ActionMailer::Preview
           owner: 'pelya',
           name: 'commandergenius',
           description: 'Port of SDL library and several games to the Android OS.',
-          primary_language: {
-            name: 'C'
-          }
+          primary_language: OpenStruct.new(name: 'C')
         }
       },
       {
@@ -25,9 +23,7 @@ class ReminderMailerPreview < ActionMailer::Preview
           owner: 'kivikakk',
           name: 'koino',
           description: 'CommonMark + GFM compatible Markdown parser and renderer',
-          primary_language: {
-            name: 'Zig'
-          },
+          primary_language: OpenStruct.new(name: 'Zig'),
           funding_links: [
             {
               "platform": 'GITHUB',
@@ -56,10 +52,10 @@ class ReminderMailerPreview < ActionMailer::Preview
   end
 
   def reminder_email
-    ReminderMailer.with(user: User.find_by(github_username: 'gjtorikian')).reminder_email('gjtorikian@somewhere.com', 'gjtorikian', starred_repositories)
+    ReminderMailer.with(user: User.find_by(github_username: 'gjtorikian')).reminder_email('gjtorikian@somewhere.com', 'gjtorikian', false, starred_repositories)
   end
 
   def send_test_mail
-    ReminderMailer.with(user: User.find_by(github_username: 'gjtorikian')).reminder_email(ENV['TEST_EMAIL_ADDRESS'], 'gjtorikian', starred_repositories)
+    ReminderMailer.with(user: User.find_by(github_username: 'gjtorikian')).reminder_email(ENV['TEST_EMAIL_ADDRESS'], 'gjtorikian', false, starred_repositories)
   end
 end

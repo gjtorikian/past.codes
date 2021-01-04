@@ -5,7 +5,7 @@ require "#{Rails.root}/app/helpers/time_helper" # rubocop:disable  Rails/FilePat
 namespace :scheduler do
   include TimeHelper
 
-  # runs once a week, on Sundays
+  # runs once a week, on beginning of week
   task weekly_delivery: :environment do
     next puts 'Not the beginning of the week; not running' unless beginning_of_week?(Time.zone.today)
 
