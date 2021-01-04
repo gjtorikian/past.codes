@@ -1,5 +1,13 @@
-A look back <%= @github_username %>’s starred repositories...
+Looking back<%= @view.github_username %>’s starred repositories...
 ==============================================================
+
+<% unless @view.has_public_repo_scope.present? %>
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Pastcodes needs additional OAuth access to provide you with more data!
+
+Could you please sign out and back in at https://past.codes?
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+<% end %>
 
 <% @view.starred_repositories.group_by { |starred_repository| starred_repository[:era] }.each do |era, starred_repositories| %>
   ### From <%= era %> ago:

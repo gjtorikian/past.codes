@@ -4,15 +4,21 @@ module Mailers
   class ReminderView < ViewModel
     include TimeHelper
 
-    attr_reader :starred_repositories
+    attr_reader :github_username, :has_public_repo_scope, :starred_repositories
 
-    def initialize(github_username, starred_repositories)
+    def initialize(github_username, starred_repositories, has_public_repo_scope:, frequency:)
       super
       @github_username = github_username
+      @has_public_repo_scope = has_public_repo_scope
       @starred_repositories = starred_repositories
 
-      # TODO: probably a better way to arrange this but whatever
+      @frequency = frequency
+    end
+
+    # TODO: probably a better way to arrange this but whatever
+    def sort_and_filter_and_assemble!
       sort_by_starred_at!
+      filter_by_starred_at!
       append_era!
       assemble_descriptions!
     end
@@ -32,21 +38,29 @@ module Mailers
     # sorts newest to oldest
     def sort_by_starred_at!
       @starred_repositories.sort! do |a, b|
-        if a[:starredAt] < b[:starredAt]
+        if a[:starred_at] < b[:starred_at]
           1
-        elsif a[:starredAt] > b[:starredAt]
+        elsif a[:starred_at] > b[:starred_at]
           -1
         else
-          a[:starredAt] <=> b[:starredAt]
+          a[:starred_at] <=> b[:starred_at]
         end
+      end
+    end
+
+    def filter_by_starred_at!
+      @starred_repositories = @starred_repositories.each_with_object([]) do |item, arr|
+        next unless within_range?(item[:starred_at], @frequency)
+
+        arr << item
       end
     end
 
     def append_era!
       @starred_repositories = @starred_repositories.each_with_object([]) do |item, arr|
-        next if item[:starredAt] > 6.months.ago
+        next if item[:starred_at] > 6.months.ago
 
-        item[:era] = distance_of_time_in_words(item[:starredAt], Time.zone.today)
+        item[:era] = distance_of_time_in_words(item[:starred_at], Time.zone.today)
         arr << item
       end
     end
@@ -57,8 +71,7 @@ module Mailers
 
         full_description = []
         full_description << repo[:description].sub(/(?:[!.]+\s*$)|(?<=\S$)/, '.') if repo[:description].present?
-
-        full_description << "It appears to be written in #{repo[:primary_language][:name]}." if repo[:primary_language].present? && repo[:primary_language][:name].present?
+        full_description << "It appears to be written in #{repo[:primary_language].name}." if repo[:primary_language].present? && repo[:primary_language].name.present?
 
         full_description << "They're looking for sponsors!" if repo[:funding_links].present?
 

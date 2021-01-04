@@ -3,10 +3,10 @@
 require 'test_helper'
 
 class ReminderMailerTest < ActionMailer::TestCase
-  test 'it works' do
-    starred_repositories = [
+  def setup
+    @starred_repositories = [
       {
-        starredAt: Time.zone.today - 6.months,
+        starred_at: Time.zone.today - 6.months,
         era: '6 months',
         repository: {
           owner: 'pelya',
@@ -14,7 +14,7 @@ class ReminderMailerTest < ActionMailer::TestCase
         }
       },
       {
-        starredAt: Time.zone.today - 6.months,
+        starred_at: Time.zone.today - 6.months,
         era: '6 months',
         repository: {
           owner: 'kivikakk',
@@ -23,7 +23,7 @@ class ReminderMailerTest < ActionMailer::TestCase
         }
       },
       {
-        starredAt: Time.zone.today - 1.year,
+        starred_at: Time.zone.today - 1.year,
         era: '1 year',
         repository: {
           owner: 'curl',
@@ -31,7 +31,7 @@ class ReminderMailerTest < ActionMailer::TestCase
         }
       },
       {
-        starredAt: Time.zone.today - 2.years,
+        starred_at: Time.zone.today - 2.years,
         era: '2 years',
         repository: {
           owner: 'jekyll',
@@ -39,11 +39,13 @@ class ReminderMailerTest < ActionMailer::TestCase
         }
       }
     ]
+  end
 
+  test 'it works' do
     t = Time.zone.local(2019, 3, 1, 10, 5, 0)
     Timecop.freeze(t) do
       # Create the email and store it for further assertions
-      email = ReminderMailer.reminder_email('you@example.com', 'gjtorikian', starred_repositories)
+      email = ReminderMailer.reminder_email('you@example.com', 'gjtorikian', @starred_repositories, has_public_repo_scope: false, frequency: :weekly)
 
       # Send the email, then test that it got queued
       assert_emails 1 do
@@ -54,6 +56,38 @@ class ReminderMailerTest < ActionMailer::TestCase
       assert_equal ['no-reply@past.codes'], email.from
       assert_equal ['you@example.com'], email.to
       assert_equal '[Pastcodes] Latest report for March 1, 2019', email.subject
+    end
+  end
+
+  test 'it reports missing tokens' do
+    t = Time.zone.local(2019, 3, 1, 10, 5, 0)
+    Timecop.freeze(t) do
+      # Create the email and store it for further assertions
+      email = ReminderMailer.reminder_email('you@example.com', 'gjtorikian', @starred_repositories, has_public_repo_scope: false, frequency: :weekly)
+
+      # Send the email, then test that it got queued
+      assert_emails 1 do
+        email.deliver_now
+      end
+
+      assert_match(/needs additional OAuth access/, email.html_part.body.decoded)
+      assert_match(/needs additional OAuth access/, email.text_part.body.decoded)
+    end
+  end
+
+  test 'it knows when it has tokens' do
+    t = Time.zone.local(2019, 3, 1, 10, 5, 0)
+    Timecop.freeze(t) do
+      # Create the email and store it for further assertions
+      email = ReminderMailer.reminder_email('you@example.com', 'gjtorikian', @starred_repositories, has_public_repo_scope: true, frequency: :weekly)
+
+      # Send the email, then test that it got queued
+      assert_emails 1 do
+        email.deliver_now
+      end
+
+      assert_no_match(/needs additional OAuth access/, email.html_part.body.decoded)
+      assert_no_match(/needs additional OAuth access/, email.text_part.body.decoded)
     end
   end
 end

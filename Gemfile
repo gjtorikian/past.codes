@@ -36,6 +36,7 @@ gem 'omniauth-github', '~> 1.4'
 gem 'omniauth-rails_csrf_protection', '~> 0.1'
 
 gem 'graphlient', '~> 0.4'
+gem 'octokit', '~> 4.20'
 
 # Use Sidekiq for the jobs queue
 gem 'sidekiq', '~> 6.0'
