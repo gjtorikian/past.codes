@@ -68,7 +68,7 @@ module ClientHelper
     result = client.query(query, { username: github_username, hasPublicRepoScope: has_public_repo_scope, after: end_cursor })
 
     starred_repos = result.data.user.starred_repositories.edges.map do |edge|
-      name, owner = edge.node.name_with_owner.split('/')
+      owner, name = edge.node.name_with_owner.split('/')
       description = edge.node.description&.strip
       primary_language = edge.node.primary_language
       funding_links = edge.node.respond_to?(:funding_links) ? edge.node.funding_links : []
