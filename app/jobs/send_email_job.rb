@@ -11,6 +11,6 @@ class SendEmailJob < ApplicationJob
 
     return if starred_repositories.blank?
 
-    ReminderMailer.reminder_email(email_address, github_username, starred_repositories, has_public_repo_scope: false).deliver_now
+    ReminderMailer.reminder_email(email_address, github_username, starred_repositories, has_public_repo_scope: has_public_repo_scope).deliver_now
   end
 end
