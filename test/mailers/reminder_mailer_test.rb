@@ -45,7 +45,7 @@ class ReminderMailerTest < ActionMailer::TestCase
     t = Time.zone.local(2019, 3, 1, 10, 5, 0)
     Timecop.freeze(t) do
       # Create the email and store it for further assertions
-      email = ReminderMailer.reminder_email('you@example.com', 'gjtorikian', @starred_repositories)
+      email = ReminderMailer.reminder_email('you@example.com', 'gjtorikian', @starred_repositories, has_public_repo_scope: false, frequency: :weekly)
 
       # Send the email, then test that it got queued
       assert_emails 1 do
@@ -63,7 +63,7 @@ class ReminderMailerTest < ActionMailer::TestCase
     t = Time.zone.local(2019, 3, 1, 10, 5, 0)
     Timecop.freeze(t) do
       # Create the email and store it for further assertions
-      email = ReminderMailer.reminder_email('you@example.com', 'gjtorikian', @starred_repositories, has_public_repo_scope: false)
+      email = ReminderMailer.reminder_email('you@example.com', 'gjtorikian', @starred_repositories, has_public_repo_scope: false, frequency: :weekly)
 
       # Send the email, then test that it got queued
       assert_emails 1 do
@@ -79,7 +79,7 @@ class ReminderMailerTest < ActionMailer::TestCase
     t = Time.zone.local(2019, 3, 1, 10, 5, 0)
     Timecop.freeze(t) do
       # Create the email and store it for further assertions
-      email = ReminderMailer.reminder_email('you@example.com', 'gjtorikian', @starred_repositories, has_public_repo_scope: true)
+      email = ReminderMailer.reminder_email('you@example.com', 'gjtorikian', @starred_repositories, has_public_repo_scope: true, frequency: :weekly)
 
       # Send the email, then test that it got queued
       assert_emails 1 do

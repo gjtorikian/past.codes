@@ -6,14 +6,19 @@ module Mailers
 
     attr_reader :github_username, :has_public_repo_scope, :starred_repositories
 
-    def initialize(github_username, starred_repositories, has_public_repo_scope:)
+    def initialize(github_username, starred_repositories, has_public_repo_scope:, frequency:)
       super
       @github_username = github_username
       @has_public_repo_scope = has_public_repo_scope
       @starred_repositories = starred_repositories
 
-      # TODO: probably a better way to arrange this but whatever
+      @frequency = frequency
+    end
+
+    # TODO: probably a better way to arrange this but whatever
+    def sort_and_filter_and_assemble!
       sort_by_starred_at!
+      filter_by_starred_at!
       append_era!
       assemble_descriptions!
     end
@@ -40,6 +45,14 @@ module Mailers
         else
           a[:starredAt] <=> b[:starredAt]
         end
+      end
+    end
+
+    def filter_by_starred_at!
+      @starred_repositories = @starred_repositories.each_with_object([]) do |item, arr|
+        next unless within_range?(item[:starredAt], @frequency)
+
+        arr << item
       end
     end
 
