@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationMailer < ActionMailer::Base
-  default from: 'no-reply@past.codes'
+  default from: 'Pastcodes <no-reply@past.codes>'
   layout 'mailer'
 end
