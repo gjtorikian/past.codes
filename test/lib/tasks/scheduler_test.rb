@@ -22,6 +22,7 @@ class SchedulerTaskTest < ActionDispatch::IntegrationTest
     Timecop.freeze(t) do
       assert_enqueued_with(job: SendEmailJob) do
         Rake::Task['scheduler:weekly_delivery'].invoke
+        sleep(2)
       end
       assert_enqueued_jobs @weekly_users.count
     end
@@ -31,6 +32,7 @@ class SchedulerTaskTest < ActionDispatch::IntegrationTest
     t = Time.zone.local(2020, 12, 8, 12, 0, 0)
     Timecop.freeze(t) do
       Rake::Task['scheduler:weekly_delivery'].invoke
+      sleep(2)
       assert_enqueued_jobs 0
     end
   end
@@ -40,6 +42,7 @@ class SchedulerTaskTest < ActionDispatch::IntegrationTest
     Timecop.freeze(t) do
       assert_enqueued_with(job: SendEmailJob) do
         Rake::Task['scheduler:monthly_delivery'].invoke
+        sleep(2)
       end
       assert_enqueued_jobs @monthly_users.count
     end
@@ -49,6 +52,7 @@ class SchedulerTaskTest < ActionDispatch::IntegrationTest
     t = Time.zone.local(2020, 11, 30, 12, 0, 0)
     Timecop.freeze(t) do
       Rake::Task['scheduler:monthly_delivery'].invoke
+      sleep(2)
       assert_enqueued_jobs 0
     end
   end
