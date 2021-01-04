@@ -4,7 +4,41 @@ require 'graphql/client'
 require 'graphql/client/http'
 
 module ClientHelper
-  STARS_QUERY = <<~GRAPHQL
+  LEGIT_STARS_QUERY = <<~GRAPHQL
+    query($username: String!, $hasPublicRepoScope: Boolean!, $after: String) {
+      user(login: $username) {
+        starredRepositories(after: $after, first: 100, ownedByViewer:false, orderBy: {field: STARRED_AT, direction: ASC}) {
+          totalCount
+          edges {
+            starredAt
+            node {
+              nameWithOwner
+              description
+              primaryLanguage {
+                name
+              }
+              ...PublicRepoPlatformInfo @include(if: $hasPublicRepoScope)
+            }
+          }
+          pageInfo {
+            startCursor
+            hasNextPage
+            endCursor
+          }
+        }
+      }
+    }
+
+    fragment PublicRepoPlatformInfo on Repository {
+      fundingLinks {
+        platform
+        url
+      }
+    }
+  GRAPHQL
+
+  # TODO: crappy workaround until GH fixes their analyzer
+  BOGUS_STARS_QUERY = <<~GRAPHQL
     query($username: String!, $hasPublicRepoScope: Boolean!, $after: String) {
       user(login: $username) {
         starredRepositories(after: $after, first: 100, ownedByViewer:false, orderBy: {field: STARRED_AT, direction: ASC}) {
@@ -31,10 +65,6 @@ module ClientHelper
 
     fragment PublicRepoPlatformInfo on Repository {
       id: fundingLinks
-      # fundingLinks {
-      #   platform
-      #   url
-      # }
     }
   GRAPHQL
 
@@ -59,7 +89,9 @@ module ClientHelper
 
     CLIENT.options[:headers] = { 'Authorization' => "bearer #{user_access_token}" }
 
-    collect_starred_repos(CLIENT, STARS_QUERY, github_username, has_public_repo_scope, nil)
+    query = has_public_repo_scope ? LEGIT_STARS_QUERY : BOGUS_STARS_QUERY
+
+    collect_starred_repos(CLIENT, query, github_username, has_public_repo_scope, nil)
   end
   module_function :fetch_stars
 

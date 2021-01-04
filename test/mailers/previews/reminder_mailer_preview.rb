@@ -52,10 +52,10 @@ class ReminderMailerPreview < ActionMailer::Preview
   end
 
   def reminder_email
-    ReminderMailer.with(user: User.find_by(github_username: 'gjtorikian')).reminder_email('gjtorikian@somewhere.com', 'gjtorikian', false, starred_repositories)
+    ReminderMailer.with(user: User.find_by(github_username: 'gjtorikian')).reminder_email('gjtorikian@somewhere.com', 'gjtorikian', starred_repositories, has_public_repo_scope: false, frequency: :weekly)
   end
 
   def send_test_mail
-    ReminderMailer.with(user: User.find_by(github_username: 'gjtorikian')).reminder_email(ENV['TEST_EMAIL_ADDRESS'], 'gjtorikian', false, starred_repositories)
+    ReminderMailer.with(user: User.find_by(github_username: 'gjtorikian')).reminder_email(ENV['TEST_EMAIL_ADDRESS'], 'gjtorikian', starred_repositories, has_public_repo_scope: false, frequency: :weekly)
   end
 end
