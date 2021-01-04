@@ -22,4 +22,11 @@ namespace :scheduler do
       SendEmailJob.perform_later(user.email_address, user.github_username, user.encrypted_gh_token)
     end
   end
+
+  # test me!
+  task test_delivery: :environment do
+    User.where(github_username: 'gjtorikian').each do |user|
+      SendEmailJob.perform_later(user.email_address, user.github_username, user.encrypted_gh_token)
+    end
+  end
 end
