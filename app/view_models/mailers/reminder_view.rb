@@ -61,6 +61,7 @@ module Mailers
         next if item[:starred_at] > 6.months.ago
 
         item[:era] = distance_of_time_in_words(item[:starred_at], Time.zone.today)
+        item[:starred_at] = format_time(item[:starred_at])
         arr << item
       end
     end

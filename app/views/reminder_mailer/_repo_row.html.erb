@@ -9,6 +9,9 @@
                 <td valign="middle">
                   <h3 class="explore-repo-title mb0">
                     <a class="link dim" href="<%= @view.github_repo_url(repository[:owner], repository[:name]) %>" / <strong><%= repository[:owner] %> / <%= repository[:name] %></strong></a>
+                    <span class="meta">
+                    on <%= starred_at %>
+                    </span>
                   </h3>
 
                   <% if repository[:full_description].present? %>
