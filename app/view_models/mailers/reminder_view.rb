@@ -87,7 +87,7 @@ module Mailers
         {
           date: 'Jan 5, 2021',
           message: 'Pastcodes no longer stores your email address!',
-          link: 'https://github.com/gjtorikian/past.codes'
+          link: 'https://github.com/gjtorikian/past.codes/pull/3'
         }
       ]
     end
