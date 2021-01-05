@@ -10,7 +10,7 @@ namespace :scheduler do
     next puts 'Not the beginning of the week; not running' unless beginning_of_week?(Time.zone.today)
 
     User.where(frequency: :weekly).each do |user|
-      SendEmailJob.perform_later(user.email_address, user.github_username, user.encrypted_gh_token, frequency: :weekly)
+      SendEmailJob.perform_later(user.id, frequency: :weekly)
     end
     rest
   end
@@ -20,7 +20,7 @@ namespace :scheduler do
     next puts 'Not the beginning of the month; not running' unless beginning_of_month?(Time.zone.today)
 
     User.where(frequency: :monthly).each do |user|
-      SendEmailJob.perform_later(user.email_address, user.github_username, user.encrypted_gh_token, frequency: :monthly)
+      SendEmailJob.perform_later(user.id, frequency: :monthly)
     end
     rest
   end
@@ -28,7 +28,7 @@ namespace :scheduler do
   # test me!
   task test_delivery: :environment do
     User.where(github_username: 'gjtorikian').each do |user|
-      SendEmailJob.perform_later(user.email_address, user.github_username, user.encrypted_gh_token, frequency: :weekly)
+      SendEmailJob.perform_later(user.id, frequency: :weekly)
     end
     rest
   end

@@ -49,11 +49,7 @@ module Mailers
     end
 
     def filter_by_starred_at!
-      @starred_repositories = @starred_repositories.each_with_object([]) do |item, arr|
-        next unless within_range?(item[:starred_at], @frequency)
-
-        arr << item
-      end
+      @starred_repositories.select! { |item| within_range?(item[:starred_at], @frequency) }
     end
 
     def append_era!
@@ -80,6 +76,20 @@ module Mailers
 
         arr << item
       end
+    end
+
+    def new_updates
+      updates.select { |item| within_range?(DateTime.parse(item[:date]), @frequency) }
+    end
+
+    private def updates
+      [
+        {
+          date: 'Jan 5, 2021',
+          message: 'Pastcodes no longer stores your email address!',
+          link: 'https://github.com/gjtorikian/past.codes/pull/3'
+        }
+      ]
     end
   end
 end

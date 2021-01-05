@@ -11,6 +11,16 @@ Could you please sign out and back in at https://past.codes?
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 <% end %>
 
+<% if @view.new_updates.present? %>
+*** NEW UPDATES SINCE YOUR LAST EMAIL ***
+
+<% @view.new_updates.each do |new_update| %>
+  * <%= new_update[:message] %> <% if new_update[:link].present? %>Read more: <%= new_update[:link] %>.<% end %>
+
+<% end %>
+
+<% end %>
+
 <% @view.starred_repositories.group_by { |starred_repository| starred_repository[:era] }.each do |era, starred_repositories| %>
   ### From <%= era %> ago
   ------------------

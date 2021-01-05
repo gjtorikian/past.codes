@@ -127,17 +127,30 @@ img.header {
   margin-right: auto;
 }
 
-div.warning {
-  background: #f8d7da;
-  box-shadow: inset 0 0 1px #f8d7da;
-  color: #721c24;
+div.alert {
+  border-radius: .25rem;
   line-height: 16px;
   margin: 20px -20px;
-  max-height: 80px;
   overflow: hidden;
   padding: 20px;
   border-radius: 3px;
   font-weight: bold;
+}
+
+div.warning {
+  background: #f8d7da;
+  box-shadow: inset 0 0 1px #f8d7da;
+  color: #721c24;
+}
+
+div.info {
+  background: #cff4fc;
+  box-shadow: inset 0 0 1px #b6effb;
+  color: #055160;
+}
+
+div.alert ul li:not(:last-child) {
+  margin-bottom: 10px;
 }
 
 @media only screen and (max-width: 620px) {

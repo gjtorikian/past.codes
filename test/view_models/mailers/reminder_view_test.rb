@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Mailers::ReminderViewTest < ActiveSupport::TestCase
+  include TimeHelper
+
   def setup
     @today = Date.new(2020, 12, 28)
     @starred_repositories = [
@@ -353,5 +355,61 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
                   "It appears to be written in PHP. They're looking for sponsors!", \
                   "They're looking for sponsors!", \
                   "No language, folks. They're looking for sponsors!"], descriptions
+  end
+
+  test 'it can handle weekly updates' do
+    updates = [
+      {
+        date: format_time(@today - 1.day),
+        message: 'Good news!',
+        link: 'https://github.com/gjtorikian/past.codes'
+      },
+      {
+        date: format_time(@today - 6.days),
+        message: 'Good news!',
+        link: 'https://github.com/gjtorikian/past.codes'
+      },
+      {
+        date: format_time(@today - 10.days),
+        message: 'Bad news!',
+        link: 'https://github.com/gjtorikian/past.codes'
+      }
+    ]
+
+    Timecop.freeze(@today) do
+      view = Mailers::ReminderView.new('gjtorikian', [], has_public_repo_scope: false, frequency: :weekly)
+
+      view.stub :updates, updates do
+        assert(view.new_updates.all? { |u| u[:message] == 'Good news!' })
+      end
+    end
+  end
+
+  test 'it can handle monthly updates' do
+    updates = [
+      {
+        date: format_time(@today - 6.days),
+        message: 'Good news!',
+        link: 'https://github.com/gjtorikian/past.codes'
+      },
+      {
+        date: format_time(@today - 5.years - 4.days),
+        message: 'Good news!',
+        link: 'https://github.com/gjtorikian/past.codes'
+      },
+      {
+        date: format_time(@today - 2.months - 10.days),
+        message: 'Bad news!',
+        link: 'https://github.com/gjtorikian/past.codes'
+      }
+    ]
+
+    Timecop.freeze(@today) do
+      view = Mailers::ReminderView.new('gjtorikian', [], has_public_repo_scope: false, frequency: :monthly)
+
+      view.stub :updates, updates do
+        assert(view.new_updates.all? { |u| u[:message] == 'Good news!' })
+      end
+    end
   end
 end
