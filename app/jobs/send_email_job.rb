@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'github_client'
+
 class SendEmailJob < ApplicationJob
   queue_as :default
 
