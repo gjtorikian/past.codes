@@ -10,18 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_27_154133) do
+ActiveRecord::Schema.define(version: 2021_01_05_110618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "users", force: :cascade do |t|
     t.string "github_username", null: false
-    t.string "email_address", null: false
     t.integer "github_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "encrypted_gh_token", null: false
+    t.string "encrypted_github_token", null: false
     t.integer "frequency", default: 0, null: false
     t.index ["frequency"], name: "index_users_on_frequency"
     t.index ["github_id"], name: "index_users_on_github_id", unique: true

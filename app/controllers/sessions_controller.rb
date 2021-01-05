@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  include ClientHelper
+  include AuthHelper
   include SessionsHelper
 
   # This route is made by the Omniauth Middleware and is invisible to rake routes

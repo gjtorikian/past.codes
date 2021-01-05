@@ -54,9 +54,9 @@ class ActionDispatch::IntegrationTest
   end
 end
 
-def stub_get_scope_access(headers: {})
-  stub_request(:get, 'https://api.github.com/user')
-    .to_return(status: 200, body: '', headers: headers)
+def stub_get_primary_emails(emails: '', headers: {})
+  stub_request(:get, 'https://api.github.com/user/emails')
+    .to_return(status: 200, body: emails, headers: headers)
 end
 
 def stub_get_introspection_query
@@ -72,7 +72,7 @@ def stub_get_introspection_query
 end
 
 def stub_get_starred_repos(res, pagination_query: false)
-  stub_get_scope_access
+  stub_get_primary_emails
   stub_get_introspection_query
 
   query = if pagination_query

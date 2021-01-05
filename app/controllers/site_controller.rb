@@ -2,7 +2,6 @@
 
 class SiteController < ApplicationController
   include SessionsHelper
-  include ClientHelper
 
   def index; end
 end

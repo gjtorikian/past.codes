@@ -6,6 +6,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   def setup
     @good_user = users(:good_user)
     @monthly_user = users(:monthly_user)
+    stub_get_primary_emails(emails: [{ email: 'exists@foo.com', primary: true }], headers: nil)
   end
 
   test 'requires auth' do
@@ -18,6 +19,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert session[:uid]
     get '/settings'
     assert_response :success
+    assert_match(/exists@foo\.com/, response.body)
   end
 
   test 'it shows next weekly date' do
