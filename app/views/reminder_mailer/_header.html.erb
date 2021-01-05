@@ -7,8 +7,19 @@
 </p>
 
 <% unless @view.has_public_repo_scope.present? %>
-<div class="warning">
+<div class="alert warning">
   Pastcodes needs additional OAuth access to provide you with more data!
   Could you please <a class="link" href="https://past.codes">sign out and back in at https://past.codes</a>?
+</div>
+<% end %>
+
+<% if @view.new_updates.present? %>
+<div class="alert info">
+  ✨ NEW UPDATES SINCE YOUR LAST EMAIL ✨
+  <ul>
+  <% @view.new_updates.each do |new_update| %>
+    <li><%= new_update[:message] %> <% if new_update[:link].present? %><a class="link" href="<%= new_update[:link] %>">Read more</a>.<% end %>
+  <% end %>
+  </ul>
 </div>
 <% end %>

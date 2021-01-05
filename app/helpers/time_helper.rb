@@ -11,17 +11,17 @@ module TimeHelper
     format_time(date)
   end
 
-  def within_range?(star_date, frequency)
+  def within_range?(date, frequency)
     case frequency.to_sym
     when :weekly
       week_range = (Time.zone.today.last_week.beginning_of_week..Time.zone.today)
       week_range.any? do |w|
-        w.day == star_date.day
+        w.day == date.day
       end
     when :monthly
       month_range = (Time.zone.today.last_month.beginning_of_month..Time.zone.today)
       month_range.any? do |m|
-        m.month == star_date.month && m.day == star_date.day
+        m.month == date.month && m.day == date.day
       end
     end
   end
