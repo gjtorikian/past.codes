@@ -6,8 +6,6 @@ class SchedulerTaskTest < ActionDispatch::IntegrationTest
   def setup
     @all_users = User.all.to_a
     @weekly_users, @monthly_users = @all_users.partition { |u| u[:frequency] == 'weekly' }
-
-    Pastcodes::Application.load_tasks if Rake::Task.tasks.empty?
   end
 
   test 'counts are different' do
@@ -22,17 +20,17 @@ class SchedulerTaskTest < ActionDispatch::IntegrationTest
     Timecop.freeze(t) do
       assert_enqueued_with(job: SendEmailJob) do
         Rake::Task['scheduler:weekly_delivery'].invoke
-        assert_enqueued_jobs @weekly_users.count
       end
     end
+    assert_enqueued_jobs @weekly_users.count
   end
 
   test 'does nothing for invalid weekly' do
     t = Time.zone.local(2020, 12, 8, 12, 0, 0)
     Timecop.freeze(t) do
       Rake::Task['scheduler:weekly_delivery'].invoke
-      assert_enqueued_jobs 0
     end
+    assert_enqueued_jobs 0
   end
 
   test 'queues for valid monthly' do
@@ -40,16 +38,16 @@ class SchedulerTaskTest < ActionDispatch::IntegrationTest
     Timecop.freeze(t) do
       assert_enqueued_with(job: SendEmailJob) do
         Rake::Task['scheduler:monthly_delivery'].invoke
-        assert_enqueued_jobs @monthly_users.count
       end
     end
+    assert_enqueued_jobs @monthly_users.count
   end
 
   test 'does nothing for invalid monthly' do
     t = Time.zone.local(2020, 11, 30, 12, 0, 0)
     Timecop.freeze(t) do
       Rake::Task['scheduler:monthly_delivery'].invoke
-      assert_enqueued_jobs 0
     end
+    assert_enqueued_jobs 0
   end
 end

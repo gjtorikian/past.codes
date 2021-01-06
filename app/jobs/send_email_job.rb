@@ -5,9 +5,9 @@ require 'github_client'
 class SendEmailJob < ApplicationJob
   queue_as :default
 
-  def perform(user_id, frequency:)
-    user = User.find_by(id: user_id)
+  def perform(user, frequency: nil)
     github_username = user.github_username
+    frequency ||= user.frequency
     encrypted_github_token = user.encrypted_github_token
     client = GitHubClient.new(encrypted_github_token)
 

@@ -17,7 +17,7 @@ class SendEmailJobTest < ActiveJob::TestCase
     stub_get_starred_repos(starred_repos_basic)
 
     assert_called_on_instance_of(ReminderMailer, :reminder_email, times: 1) do
-      SendEmailJob.perform_now(@user.id, frequency: :weekly)
+      SendEmailJob.perform_now(@user, frequency: :weekly)
     end
   end
 
@@ -29,7 +29,7 @@ class SendEmailJobTest < ActiveJob::TestCase
 
     # notice the map is called twice now (we don't care as much about the return values)
     assert_called_on_instance_of(GraphQL::Client::List, :map, times: 2, returns: []) do
-      SendEmailJob.perform_now(@user.id, frequency: :weekly)
+      SendEmailJob.perform_now(@user, frequency: :weekly)
     end
   end
 
@@ -38,7 +38,7 @@ class SendEmailJobTest < ActiveJob::TestCase
     stub_get_starred_repos(starred_repos_empty)
 
     assert_called_on_instance_of(ReminderMailer, :reminder_email, times: 0) do
-      SendEmailJob.perform_now(@user.id, frequency: :weekly)
+      SendEmailJob.perform_now(@user, frequency: :weekly)
     end
   end
 end
