@@ -13,6 +13,8 @@ require 'minitest/mock_expectations'
 
 Dir[Rails.root.join('test/support/**/*.rb')].sort.each { |f| require f }
 
+Pastcodes::Application.load_tasks if Rake::Task.tasks.count.zero?
+
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers
   parallelize(workers: :number_of_processors)
