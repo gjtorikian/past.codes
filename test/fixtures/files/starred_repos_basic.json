@@ -7,19 +7,22 @@
           {
             "starredAt": "2009-11-19T15:15:39Z",
             "node": {
-              "nameWithOwner": "pelya/commandergenius"
+              "nameWithOwner": "pelya/commandergenius",
+              "fundingLinks": []
             }
           },
           {
             "starredAt": "2014-02-11T21:23:19Z",
             "node": {
-              "nameWithOwner": "jekyll/jekyll"
+              "nameWithOwner": "jekyll/jekyll",
+              "fundingLinks": []
             }
           },
           {
             "starredAt": "2016-01-17T18:26:15Z",
             "node": {
-              "nameWithOwner": "curl/curl"
+              "nameWithOwner": "curl/curl",
+              "fundingLinks": []
             }
           }
         ],

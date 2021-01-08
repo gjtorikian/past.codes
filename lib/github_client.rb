@@ -6,7 +6,7 @@ require 'graphql/client/http'
 class GitHubClient
   include AuthHelper
 
-  LEGIT_STARS_QUERY = <<~GRAPHQL
+  STARS_QUERY = <<~GRAPHQL
     query($username: String!, $hasPublicRepoScope: Boolean!, $after: String) {
       user(login: $username) {
         starredRepositories(after: $after, first: 100, ownedByViewer:false, orderBy: {field: STARRED_AT, direction: ASC}) {
@@ -19,7 +19,7 @@ class GitHubClient
               primaryLanguage {
                 name
               }
-              ...PublicRepoPlatformInfo @include(if: $hasPublicRepoScope)
+              ...PublicRepoPlatformInfo
             }
           }
           pageInfo {
@@ -33,40 +33,9 @@ class GitHubClient
 
     fragment PublicRepoPlatformInfo on Repository {
       fundingLinks {
-        platform
-        url
+        platform @include(if: $hasPublicRepoScope)
+        url @include(if: $hasPublicRepoScope)
       }
-    }
-  GRAPHQL
-
-  # TODO: crappy workaround until GH fixes their analyzer
-  BOGUS_STARS_QUERY = <<~GRAPHQL
-    query($username: String!, $hasPublicRepoScope: Boolean!, $after: String) {
-      user(login: $username) {
-        starredRepositories(after: $after, first: 100, ownedByViewer:false, orderBy: {field: STARRED_AT, direction: ASC}) {
-          totalCount
-          edges {
-            starredAt
-            node {
-              nameWithOwner
-              description
-              primaryLanguage {
-                name
-              }
-              ...PublicRepoPlatformInfo @include(if: $hasPublicRepoScope)
-            }
-          }
-          pageInfo {
-            startCursor
-            hasNextPage
-            endCursor
-          }
-        }
-      }
-    }
-
-    fragment PublicRepoPlatformInfo on Repository {
-      id: fundingLinks
     }
   GRAPHQL
 
@@ -94,9 +63,7 @@ class GitHubClient
   end
 
   def fetch_stars(github_username, has_public_repo_scope: false)
-    query = has_public_repo_scope ? LEGIT_STARS_QUERY : BOGUS_STARS_QUERY
-
-    collect_starred_repos(query, github_username, has_public_repo_scope, nil)
+    collect_starred_repos(STARS_QUERY, github_username, has_public_repo_scope, nil)
   end
 
   # Iterative recursion, collect results in all_starred_repos array.
@@ -107,7 +74,7 @@ class GitHubClient
       owner, name = edge.node.name_with_owner.split('/')
       description = edge.node.description&.strip
       primary_language = edge.node.primary_language
-      funding_links = edge.node.respond_to?(:funding_links) ? edge.node.funding_links : []
+      funding_links = edge.node.funding_links
       {
         starred_at: edge.starred_at.to_datetime,
         repository: {
