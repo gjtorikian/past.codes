@@ -26,8 +26,8 @@ class ReminderMailerPreview < ActionMailer::Preview
           primary_language: OpenStruct.new(name: 'Zig'),
           funding_links: [
             {
-              "platform": 'GITHUB',
-              "url": 'https://github.com/kivikakk'
+              platform: 'GITHUB',
+              url: 'https://github.com/kivikakk'
             }
           ]
         }

@@ -65,12 +65,15 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
   end
 
   test 'it adds eras to repos' do
-    @view.sort_by_starred_at!
-    assert_equal 6, @starred_repositories.length
+    Timecop.freeze(@today) do
+      @view.sort_by_starred_at!
+      assert_equal 6, @starred_repositories.length
 
-    eras = @view.append_era!.pluck(:era)
-    assert_equal 5, eras.length # dates less than 6 months are dropped!
-    assert_equal ['6 months', '6 months', '1 year', '2 years', '5 years'], eras
+      eras = @view.append_era!.pluck(:era)
+      assert_equal 5, eras.length # dates less than 6 months are dropped!
+
+      assert_equal ['6 months', '6 months', '1 year', '2 years', '5 years'], eras
+    end
   end
 
   test 'it can filter on weekly frequency' do
@@ -131,7 +134,7 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
 
       descriptions = view.filter_by_starred_at!
 
-      assert(descriptions.map { |h| h.dig :repository, :owner }.all? { |d| d == 'gjtorikian' })
+      assert(descriptions.map { |h| h.dig :repository, :owner }.all?('gjtorikian'))
     end
   end
 
@@ -193,7 +196,7 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
 
       descriptions = view.filter_by_starred_at!
 
-      assert(descriptions.map { |h| h.dig :repository, :owner }.all? { |d| d == 'gjtorikian' })
+      assert(descriptions.map { |h| h.dig :repository, :owner }.all?('gjtorikian'))
     end
   end
 
@@ -284,12 +287,12 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
           primary_language: OpenStruct.new(name: 'Rust'),
           funding_links: [
             {
-              "platform": 'GITHUB',
-              "url": 'https://github.com/gjtorikian'
+              platform: 'GITHUB',
+              url: 'https://github.com/gjtorikian'
             },
             {
-              "platform": 'OPEN_COLLECTIVE',
-              "url": 'https://opencollective.com/garen-torikian'
+              platform: 'OPEN_COLLECTIVE',
+              url: 'https://opencollective.com/garen-torikian'
             }
           ]
         }
@@ -302,12 +305,12 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
           primary_language: OpenStruct.new(name: 'PHP'),
           funding_links: [
             {
-              "platform": 'GITHUB',
-              "url": 'https://github.com/gjtorikian'
+              platform: 'GITHUB',
+              url: 'https://github.com/gjtorikian'
             },
             {
-              "platform": 'OPEN_COLLECTIVE',
-              "url": 'https://opencollective.com/garen-torikian'
+              platform: 'OPEN_COLLECTIVE',
+              url: 'https://opencollective.com/garen-torikian'
             }
           ]
         }
@@ -319,12 +322,12 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
           name: 'repo with no desc, no language, but funding links',
           funding_links: [
             {
-              "platform": 'GITHUB',
-              "url": 'https://github.com/gjtorikian'
+              platform: 'GITHUB',
+              url: 'https://github.com/gjtorikian'
             },
             {
-              "platform": 'OPEN_COLLECTIVE',
-              "url": 'https://opencollective.com/garen-torikian'
+              platform: 'OPEN_COLLECTIVE',
+              url: 'https://opencollective.com/garen-torikian'
             }
           ]
         }
@@ -337,12 +340,12 @@ class Mailers::ReminderViewTest < ActiveSupport::TestCase
           description: 'No language, folks.',
           funding_links: [
             {
-              "platform": 'GITHUB',
-              "url": 'https://github.com/gjtorikian'
+              platform: 'GITHUB',
+              url: 'https://github.com/gjtorikian'
             },
             {
-              "platform": 'OPEN_COLLECTIVE',
-              "url": 'https://opencollective.com/garen-torikian'
+              platform: 'OPEN_COLLECTIVE',
+              url: 'https://opencollective.com/garen-torikian'
             }
           ]
         }

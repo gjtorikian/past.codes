@@ -27,8 +27,8 @@ namespace :mailer do
           },
           funding_links: [
             {
-              "platform": 'GITHUB',
-              "url": 'https://github.com/kivikakk'
+              platform: 'GITHUB',
+              url: 'https://github.com/kivikakk'
             }
           ]
         }
