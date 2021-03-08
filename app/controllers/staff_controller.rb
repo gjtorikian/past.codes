@@ -12,7 +12,7 @@ class StaffController < ApplicationController
 
     # Verify that the user is a staff member
     user = User.find_by(github_id: session[:uid])
-    return render404 unless Flipper.enabled?(:staff, user)
+    return render404 unless Flipper.enabled?(:dashboard_staff, user)
   end
 
   # sidekiq needs its own special method
@@ -20,6 +20,6 @@ class StaffController < ApplicationController
     return false if request.session[:uid].blank? # needs a login
 
     user = User.find_by(github_id: request.session[:uid])
-    Flipper.enabled?(:sidekiq_dashboard, user)
+    Flipper.enabled?(:dashboard_sidekiq, user)
   end
 end
