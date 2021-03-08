@@ -2,5 +2,7 @@
 <hr>
 
 <ul>
-<li><a class="link blue" href="/staff/sidekiq">Sidekiq Dashboard</a></li>
+  <% if Flipper.enabled?(:dashboard_sidekiq, current_user) %>
+    <li><a class="link blue" href="/staff/sidekiq">Sidekiq Dashboard</a></li>
+  <% end %>
 </ul>

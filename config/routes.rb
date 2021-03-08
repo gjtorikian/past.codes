@@ -26,5 +26,7 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => 'staff/sidekiq'
   end
 
+  mount Flipper::Cloud.app, at: 'webhooks/flipper'
+
   match '*unmatched_route', to: 'application#render404', via: :all
 end

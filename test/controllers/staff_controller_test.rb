@@ -10,6 +10,7 @@ class StaffControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not allow non-staff' do
     bad_user = users(:bad_user)
+    Flipper.disable(:dashboard_staff, bad_user)
     sign_in_as(bad_user)
     get '/staff'
     assert_response :not_found
@@ -17,6 +18,7 @@ class StaffControllerTest < ActionDispatch::IntegrationTest
 
   test 'should allow staff' do
     staff = users(:gjtorikian)
+    Flipper.enable(:dashboard_staff, staff)
     sign_in_as(staff)
     get '/staff'
     assert_response :success
@@ -24,6 +26,7 @@ class StaffControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get sidekiq dashboard' do
     staff = users(:gjtorikian)
+    Flipper.enable(:dashboard_sidekiq, staff)
     sign_in_as(staff)
     get '/staff/sidekiq'
     assert_response :success
@@ -31,6 +34,7 @@ class StaffControllerTest < ActionDispatch::IntegrationTest
 
   test 'should block rando from get sidekiq dashboard' do
     bad_user = users(:bad_user)
+    Flipper.disable(:dashboard_sidekiq, bad_user)
     sign_in_as(bad_user)
     get '/staff/sidekiq'
     assert_response :not_found

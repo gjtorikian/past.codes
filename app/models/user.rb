@@ -18,4 +18,8 @@ class User < ApplicationRecord
       encrypted_github_token: encrypted_github_token
     )
   end
+
+  def flipper_id
+    "#{self.class.name};#{github_username}"
+  end
 end
