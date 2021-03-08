@@ -1,5 +1,7 @@
-require "flipper/cloud"
-require "flipper/adapters/active_record"
+# frozen_string_literal: true
+
+require 'flipper/cloud'
+require 'flipper/adapters/active_record'
 
 # For dev:
 #   FLIPPER_CLOUD_TOKEN=<your-personal-env-token>
@@ -18,5 +20,5 @@ Flipper.configure do |config|
 end
 
 # Memoize Flipper adapter calls per request
-require "flipper/middleware/memoizer"
+require 'flipper/middleware/memoizer'
 Rails.configuration.middleware.use Flipper::Middleware::Memoizer, preload_all: true
