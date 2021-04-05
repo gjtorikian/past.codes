@@ -79,7 +79,7 @@ module Mailers
     end
 
     def new_updates
-      updates.select { |item| within_range?(DateTime.parse(item[:date]), @frequency) }
+      [] #updates.select { |item| within_range?(DateTime.parse(item[:date]), @frequency) }
     end
 
     private def updates
